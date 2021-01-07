@@ -32,6 +32,8 @@ Il contiendra votre premier serveur Node.
 
 Pour créer un serveur node dans le fichier server.js, il faudra le code suivant :
 
+
+
     const http = require('http');
 
     const server = http.createServer((request, response) => {
@@ -39,6 +41,8 @@ Pour créer un serveur node dans le fichier server.js, il faudra le code suivant
     });
 
     server.listen(process.env.PORT || 3000);
+
+
 
 Ici, on import le package `HTTP` natif de Node et on l'utilise pour créer un serveur,
 en passant une fonction qui sera exécutée à chaque appel effectué vers ce serveur.
@@ -59,3 +63,9 @@ on peut utiliser postman pour effectué les requète en GET ou autre verbe http
 
 ## Installer nodemon
 
+pour simplifier le développement Node, on va installer `nodemon` en ligne de commande
+
+    npm install -g nodemon
+
+Maintenant , au lieu d'utiliser `node server` , on va utiliser `nodemon server`, qui va surveillé les modification de nos fichiers et redémarrera automatiquement le serveur lorsqu'il aura besoin d'être mis à jour.
+On aura plus besoin de redémarrer le serveur manuellement après chaque modification.
