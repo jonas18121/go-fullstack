@@ -26,3 +26,49 @@ dans app.js
 `const app = express();` la constante app contiendra notre application express , grace à express()
 
 `module.exports = app;`, on va exporter la constante app, afin d'utiliser notre application partout dans notre projet go-fullstack
+
+## Exécuter l'application Express sur le serveur Node
+
+Modification dans server.js
+
+    const http = require('http');
+    const app = require('./app');
+
+    app.set('port', process.env.PORT || 3000);
+
+    const server = http.createServer(app);
+
+    server.listen(process.env.PORT || 3000);
+
+
+`const app = require('./app');` On import le fichier app.js dans server.js
+
+`app.set('port', process.env.PORT || 3000);` on dit à l'application express sur quel port et doit tourner, 
+on lui passera les mêmes information que `server.listen(process.env.PORT || 3000);`
+
+`const server = http.createServer(app);` on met notre application `app` dans le `http.createServer(app);`
+qui va recevoir les requêtes et reponse venant du framework express
+
+
+Effectuer une demande vers ce serveur générera une erreur 404, car notre application n'a encore aucun moyen de répondre. 
+Configurons une réponse simple pour nous assurer que tout fonctionne correctement, 
+en effectuant un ajout à notre fichier app.js :
+
+dans app.js
+
+    const express = require('express');
+
+    const app = express();
+
+    app.use((request, response) => {
+        response.json({message: 'Votre requête a bien été reçue !'});
+    });
+
+    module.exports = app;
+
+`app.use((request, response) => { response.json({message: 'Votre requête a bien été reçue !' }); });` 
+app.use tel qu'il est écrit actuellement sera utiliser par express pour renvoyer une réponse.
+
+Si on essaye d'effectuer une requête à notre serveur, nous devrons récupérer un Objet JSON contenant le message que nous avont spécifié.
+
+## Ajouter des middleware
