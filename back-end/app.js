@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -12,6 +13,28 @@ app.use((request, response, next) => {
     response.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     response.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
+});
+
+/**
+ * va transformer le corp de la requête en Json ( en objet javasript utilisable )
+ * en utilisant app.use() au lieu de (app.post(), app.get(), app.put() ect...) 
+ * ça va agir sur toutes les routes de l'application 
+ */
+app.use(bodyParser.json());
+
+/**
+ * pour l'instant rien est sauvegarder en base de données
+ * grace a app.use(bodyParser.json()); 
+ * on aura acces au cors de la requête dans ce middleware en faisant request.body
+ * l'application front-end va quand même attendre une réponse.
+ * donc il faudra renvoyer une réponse avec un status code et un message json par exemple :
+ * response.status(201).json({ message: 'Objet créé !' });
+ */
+app.post('/api/stuff', (request, response, next) => {
+    console.log(request.body);
+    response.status(201).json({
+        message: 'Objet créé !'
+    });
 });
 
 /* 
