@@ -31,10 +31,12 @@ export class NewThingComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.state.mode$.next('form');
     this.thingForm = this.formBuilder.group({
-      title: [null, Validators.required],
-      description: [null, Validators.required],
-      price: [0, Validators.required],
-      imageUrl: [null, Validators.required]
+
+      title:        [null, Validators.required],
+      description:  [null, Validators.required],
+      price:        [0, Validators.required],
+      imageUrl:     [null, Validators.required]
+
     });
     this.partSub = this.state.part$.subscribe(
       (part) => {
@@ -47,12 +49,14 @@ export class NewThingComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.loading = true;
     const thing = new Thing();
-    thing.title = this.thingForm.get('title').value;
-    thing.description = this.thingForm.get('description').value;
-    thing.price = this.thingForm.get('price').value * 100;
-    thing.imageUrl = this.thingForm.get('imageUrl').value;
-    thing._id = new Date().getTime().toString();
-    thing.userId = this.userId;
+
+    thing.title         = this.thingForm.get('title').value;
+    thing.description   = this.thingForm.get('description').value;
+    thing.price         = this.thingForm.get('price').value * 100;
+    thing.imageUrl      = this.thingForm.get('imageUrl').value;
+    thing._id           = new Date().getTime().toString();
+    thing.userId        = this.userId;
+    
     this.stuffService.createNewThing(thing).then(
       () => {
         this.thingForm.reset();
