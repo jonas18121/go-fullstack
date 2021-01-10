@@ -1,7 +1,23 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+/** pour MongoDB */
+const mongoose = require('mongoose');
+
 const app = express();
+
+const uri = "mongodb+srv://go-fullstack:go-fullstack@cluster0.zbjqg.mongodb.net/go-fullstack?retryWrites=true&w=majority";
+
+/**
+ * connexion à MongoDB
+ */
+mongoose.connect(uri,
+{ useNewUrlParser: true,
+    useUnifiedTopology: true 
+})
+.then(() => console.log('Connexion à MongoDB réussie !'))
+.catch(() => console.log('Connexion à MongoDB échouée !'));
+
 
 /**
  * Dans ce middleware, on ne met pas de route en premier argument, 
