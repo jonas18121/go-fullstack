@@ -75,3 +75,54 @@ dans `app.js`
 `    })`
 `    .then(() => console.log('Connexion à MongoDB réussie !'))`
 `    .catch(() => console.log('Connexion à MongoDB échouée !'));`
+
+
+# Creer un schema de données
+
+L'un des avantages que nous avons à utiliser Mongoose pour gérer notre base de données MongoDB est que nous pouvons implémenter des schémas de données stricts, 
+qui permettent de rendre notre application plus robuste. 
+Commençons par créer un schéma Thing (« chose ») pour tout objet mis en vente dans notre application.
+
+## Créer un schéma Thing
+
+Dans le dossier back-end , on crée un dossier appelé `models` et dens ce dossier , on crée un fichier appelé thing.js
+
+dans `thing.js`
+
+    const mongoose = require('mongoose');
+
+    /**
+    * on cée notre schema de données
+    * le id sera automatiquement généré par MongoDB
+    */
+    const thingSchema = mongoose.Schema(
+        {
+            title:          { type: String, required: true },
+            description:    { type: String, required: true },
+            imageUrl:       { type: String, required: true },
+            userId:         { type: String, required: true },
+            price:          { type: Number, required: true },
+        }
+    );
+
+    /**
+    * mongoose.model('le_nom_du_model', le_schema_creer)
+    * cette fonction model est importante car c'est grace à elle,
+    * qu'on pourra utilisée le shema en base de données
+    */
+    modules.exports = mongoose.model('Thing', thingSchema);
+
+
+
+Ici, voici ce que nous faisons :
+
+    - nous créons un schéma de données qui contient les champs souhaités pour chaque Thing, 
+    indique leur type ainsi que leur caractère (obligatoire ou non). 
+    Pour cela, on utilise la méthode Schema mise à disposition par Mongoose. 
+    Pas besoin de mettre un champ pour l'Id puisqu'il est automatiquement généré par Mongoose,
+
+    - ensuite, nous exportons ce schéma en tant que modèle Mongoose appelé « Thing », 
+    le rendant par là même disponible pour notre application Express.
+
+Ce modèle nous permettra non seulement d'appliquer notre structure de données, 
+mais aussi de simplifier les opérations de lecture et d'écriture dans la base de données.
