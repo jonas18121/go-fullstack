@@ -79,6 +79,8 @@ dans `App.js`
     * l'application front-end va quand même attendre une réponse.
     * donc il faudra renvoyer une réponse avec un status code et un message json par exemple :
     * response.status(201).json({ message: 'Objet créé !' });
+    *
+    * Le dernier middleware d'une chaîne doit renvoyer la réponse au client pour empêcher la requête d'expirer.
     */
     app.post('/api/stuff', (request, response, next) => {
         console.log(request.body);
