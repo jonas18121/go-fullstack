@@ -19,4 +19,4 @@ const thingSchema = mongoose.Schema(
  * cette fonction model est importante car c'est grace à elle,
  * qu'on pourra utilisée le shema en base de données
  */
-modules.exports = mongoose.model('Thing', thingSchema);
+module.exports = mongoose.model('Thing', thingSchema);

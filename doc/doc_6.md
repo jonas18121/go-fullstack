@@ -85,7 +85,7 @@ Commençons par créer un schéma Thing (« chose ») pour tout objet mis en ven
 
 ## Créer un schéma Thing
 
-Dans le dossier back-end , on crée un dossier appelé `models` et dens ce dossier , on crée un fichier appelé thing.js
+Dans le dossier back-end , on crée un dossier appelé `models` et dans ce dossier , on crée un fichier appelé thing.js
 
 dans `thing.js`
 
@@ -110,7 +110,7 @@ dans `thing.js`
     * cette fonction model est importante car c'est grace à elle,
     * qu'on pourra utilisée le shema en base de données
     */
-    modules.exports = mongoose.model('Thing', thingSchema);
+    module.exports = mongoose.model('Thing', thingSchema);
 
 
 
