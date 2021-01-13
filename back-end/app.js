@@ -4,6 +4,10 @@ const bodyParser = require('body-parser');
 /** pour MongoDB */
 const mongoose = require('mongoose');
 
+/** model */
+const Thing = require('./models/thing');
+
+/** framework express */
 const app = express();
 
 const uri = "mongodb+srv://go-fullstack:go-fullstack@cluster0.zbjqg.mongodb.net/go-fullstack?retryWrites=true&w=majority";
@@ -32,7 +36,7 @@ app.use((request, response, next) => {
 });
 
 /**
- * va transformer le corp de la requête en Json ( en objet javasript utilisable )
+ * bodyParser.json() va transformer le corp de la requête en Json ( en objet javasript utilisable )
  * en utilisant app.use() au lieu de (app.post(), app.get(), app.put() ect...) 
  * ça va agir sur toutes les routes de l'application 
  */
@@ -47,12 +51,49 @@ app.use(bodyParser.json());
  * response.status(201).json({ message: 'Objet créé !' });
  * 
  * Le dernier middleware d'une chaîne doit renvoyer la réponse au client pour empêcher la requête d'expirer.
+ * 
+ * 
+ * ------------------------------------------------------------------------------------------
+ *  const thing = new Thing({
+ *
+ *       raccourcie javascript pour récupérer les données dans le corp du body 
+ *      ...request.body
+ *  });
+ * 
+ * remplace 
+ * 
+ * const thing = new Thing({
+ *
+ *       title: request.body.title,
+ *       description: request.body.description,
+ *       imageUrl: request.body.imageUrl,
+ *       userId: request.body.userId,
+ *       price: request.body.price,
+ *   });
+ * 
+ * grace aux 3 petits point, appelé spread (...request.body) : 
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
  */
 app.post('/api/stuff', (request, response, next) => {
-    console.log(request.body);
-    response.status(201).json({
-        message: 'Objet créé !'
+
+    /** le front-end va renvoyer un id qui ne sera pas le bon , vu que MongoDB va le généré automatiquement
+     * on va supprimer l'id du corp de la requète avant de copier l'objet
+    */
+    delete request.body._id;
+
+    const thing = new Thing({
+
+        /** raccourcie javascript pour récupérer les données dans le corp du body */
+        ...request.body
     });
+
+    /**
+     * .save() enregistre l'objet dans la bdd et re tourne une promise
+     * donc faut rajouter .then et .catch
+     */
+    thing.save()
+    .then(() => response.status(201).json({ message: 'Objet enregistré !'}))
+    .catch(error => response.status(400).json({ error}))
 });
 
 /* 
