@@ -103,7 +103,7 @@ app.post('/api/stuff', (request, response, next) => {
 */
 app.use('/api/stuff', (request, response, next) => {
     
-    const stuff = [
+    /* const stuff = [
         {
           _id: 'oeihfzeoi',
           title: 'Mon premier objet',
@@ -122,7 +122,11 @@ app.use('/api/stuff', (request, response, next) => {
         },
     ];
 
-    response.status(200).json(stuff);
+    response.status(200).json(stuff); */
+
+    Thing.find()
+        .then(things => response.status(200).json(things))
+        .catch(error => response.status(400).json({ error }));
 });
 
 
