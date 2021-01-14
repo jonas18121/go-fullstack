@@ -164,3 +164,22 @@ dans `app.js`
 
 
     module.exports = app;
+
+
+## Récupération de la liste de Thing en vente
+
+A présent, on va implémenter notre route GET afin qu'elle renvois tous les `Thing` dans la base de données
+
+    app.use('/api/stuff', (request, response, next) => {
+    
+        Thing.find()
+            .then(things => response.status(200).json(things))
+            .catch(error => response.status(400).json({ error }));
+    });
+
+
+ici, on utilise la methode `find()` dans notre modèle Mongoose afin de renvoyer un tableau contenant tous les Things dans notre base de données.
+Maintenant, si on ajoute un autre Thing, il doit s'affiché immédiatement sur notre page d'article en vente.
+
+En revanche, si on clique sur l'un des Things , l'affichage d'un seul élément ne fonctionne pas. 
+En effet, il tente d'effectuer un appel GET différent pour trouver un Thing individuel. 
