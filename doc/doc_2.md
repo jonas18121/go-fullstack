@@ -16,7 +16,7 @@ comme vous le verrez à mesure que nous progresserons dans ce cours.
 ## Initialiser notre projet
 
 On crée un sous-dossier `back-end ` go-fullstack/back-end/.
-dedans on exécute la commande `nmp init` pour `initialiser un nouveau projet Node`.
+dedans on exécute la commande `npm init` pour `initialiser un nouveau projet Node`.
 lors de l'initialisation on pourra garder les option par défault ou les modifier si on le souhaite. 
 par contre pour le `point d'entrée ( entry point : )` , on va mettre `server.js`.
 
@@ -47,7 +47,7 @@ Pour créer un serveur node dans le fichier server.js, il faudra le code suivant
 Ici, on import le package `HTTP` natif de Node et on l'utilise pour créer un serveur,
 en passant une fonction qui sera exécutée à chaque appel effectué vers ce serveur.
 Cette fonction reçois les objets `request et response` en tant qu'argument.
-Dane cette exemple , on utlise la méthode `end` de la réponse pour renvoyer une réponse de type `string` à l'appelant.
+Dans cette exemple , on utlise la méthode `end` de la réponse pour renvoyer une réponse de type `string` à l'appelant.
 
 à `server.listen(process.env.PORT || 3000);` on configure le serveur pour qu'il écoute.
 
