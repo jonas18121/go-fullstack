@@ -130,6 +130,21 @@ app.put('/api/stuff/:id', (request, response, next) => {
 
 });
 
+/**
+ * Supprimer un objet précis
+ * 
+ * dans request.params , on a les paramètre qui on été envoyer , ici c'est l'id
+ */
+app.delete('/api/stuff/:id', (request, response, next) => {
+
+    //console.log(response);
+    Thing.deleteOne({ _id: request.params.id })
+        .then(() => response.status(200).json({ message: 'Objet supprimé !'}))
+        .catch(error => response.status(404).json({ error }))
+    ;
+
+});
+
 
 /* 
  *   afficher tous les objet en ventes
