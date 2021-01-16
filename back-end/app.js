@@ -15,12 +15,10 @@ const uri = "mongodb+srv://go-fullstack:go-fullstack@cluster0.zbjqg.mongodb.net/
 /**
  * connexion à MongoDB
  */
-mongoose.connect(uri,
-{ useNewUrlParser: true,
-    useUnifiedTopology: true 
-})
-.then(() => console.log('Connexion à MongoDB réussie !'))
-.catch(() => console.log('Connexion à MongoDB échouée !'));
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('Connexion à MongoDB réussie !'))
+    .catch(() => console.log('Connexion à MongoDB échouée !'))
+;
 
 
 /**
@@ -42,7 +40,11 @@ app.use((request, response, next) => {
  */
 app.use(bodyParser.json());
 
+
+
 /**
+ * créer un objet pour la vendre
+ * 
  * pour l'instant rien est sauvegarder en base de données
  * grace a app.use(bodyParser.json()); 
  * on aura acces au cors de la requête dans ce middleware en faisant request.body
@@ -92,16 +94,36 @@ app.post('/api/stuff', (request, response, next) => {
      * donc faut rajouter .then et .catch
      */
     thing.save()
-    .then(() => response.status(201).json({ message: 'Objet enregistré !'}))
-    .catch(error => response.status(400).json({ error}))
+        .then(() => response.status(201).json({ message: 'Objet enregistré !'}))
+        .catch(error => response.status(400).json({ error}))
+    ;
 });
 
+
+/**
+ * Afficher un objet précis
+ * 
+ * dans request.params , on a les paramètre qui on été envoyer , ici c'est l'id
+ */
+app.get('/api/stuff/:id', (request, response, next) => {
+
+    console.log(response);
+    Thing.findOne({ _id: request.params.id })
+        .then(thing => response.status(200).json(thing))
+        .catch(error => response.status(404).json({error}))
+    ;
+
+});
+
+
 /* 
-    Le premier argument est la route ( endpoint ) qui permettra de recevoir le contenu de la constante stuff
-    l'addresse absolue est pour l'instant : 'http://localhost:3000/api/stuff',
-    notre partie front-end pourra recupéré le contenu de la constante stuff, a cette adresse absolue
+ *   afficher tous les objet en ventes
+ *
+ *  Le premier argument est la route ( endpoint ) qui permettra de recevoir le contenu de la constante stuff
+ *   l'addresse absolue est pour l'instant : 'http://localhost:3000/api/stuff',
+ *   notre partie front-end pourra recupéré le contenu de la constante stuff, a cette adresse absolue
 */
-app.use('/api/stuff', (request, response, next) => {
+app.get('/api/stuff', (request, response, next) => {
     
     /* const stuff = [
         {
@@ -126,7 +148,8 @@ app.use('/api/stuff', (request, response, next) => {
 
     Thing.find()
         .then(things => response.status(200).json(things))
-        .catch(error => response.status(400).json({ error }));
+        .catch(error => response.status(400).json({ error }))
+    ;
 });
 
 
