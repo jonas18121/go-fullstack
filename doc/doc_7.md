@@ -194,6 +194,10 @@ On va ajouter une route juste après le POST et `qui va nous permettre d'affiche
             .catch(error => res.status(404).json({ error }));
     });
 
+traduction de : `Thing.findOne({ _id: req.params.id })`
+
+`{ _id: req.params.id }` = objet de comparaison , pour savoir quel objet on affiche via la fonction findOne(), l'id a été passé dans l'URL
+
 Dans cette route :
 .
     - on utilise la méthode `get()` pour répondre uniquement aux demandes GET à cet endpoint

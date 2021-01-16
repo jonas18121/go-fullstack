@@ -107,10 +107,25 @@ app.post('/api/stuff', (request, response, next) => {
  */
 app.get('/api/stuff/:id', (request, response, next) => {
 
-    console.log(response);
+    //console.log(response);
     Thing.findOne({ _id: request.params.id })
         .then(thing => response.status(200).json(thing))
         .catch(error => response.status(404).json({error}))
+    ;
+
+});
+
+/**
+ * Modifier un objet précis
+ * 
+ * dans request.params , on a les paramètre qui on été envoyer , ici c'est l'id
+ */
+app.put('/api/stuff/:id', (request, response, next) => {
+
+    //console.log(response);
+    Thing.updateOne({ _id: request.params.id }, { ...request.body, _id: request.params.id})
+        .then(() => response.status(200).json({ message: 'Objet modifié !'}))
+        .catch(error => response.status(404).json({ error }))
     ;
 
 });
