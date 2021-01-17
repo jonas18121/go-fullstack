@@ -6,7 +6,7 @@ On va ajouter une autre route dans notre application , juste en bas de notre rou
 Elle répondra aux requ^étes PUT
 
     app.put('/api/stuff/:id', (req, res, next) => {
-`        Thing.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })`
+        Thing.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
             .then(() => res.status(200).json({ message: 'Objet modifié !'}))
             .catch(error => res.status(400).json({ error }));
     });
