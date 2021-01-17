@@ -90,8 +90,8 @@ dans app.js
     const app = express();
 
     /*
-`    Les 4 méthodes app.use() rassemblé dans ce script forme un middleware`
-`    Donc pour passé d'un app.use() à l'autre, il faut la méthode next(), obligatoirement`
+    Les 4 méthodes app.use() rassemblé dans ce script forme un middleware
+    Donc pour passé d'un app.use() à l'autre, il faut la méthode next(), obligatoirement
     */
 
     app.use((request, response, next) => {

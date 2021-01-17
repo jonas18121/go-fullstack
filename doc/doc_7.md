@@ -42,7 +42,7 @@ dans `app.js`
     const mongoose = require('mongoose');
 
     /** model */
-`    const Thing = require('./models/thing');`
+    const Thing = require('./models/thing');
 
     /** framework express */
     const app = express();
@@ -116,21 +116,21 @@ dans `app.js`
         /** le front-end va renvoyer un id qui ne sera pas le bon , vu que MongoDB va le généré automatiquement
         * on va supprimer l'id du corp de la requète avant de copier l'objet
         */
-`        delete request.body._id;`
+        delete request.body._id;
 
-`        const thing = new Thing({`
+        const thing = new Thing({
 
             /** raccourcie javascript pour récupérer les données dans le corp du body */
-`            ...request.body`
+            ...request.body
         });
 
         /**
         * .save() enregistre l'objet dans la bdd et re tourne une promise
         * donc faut rajouter .then et .catch
         */
-`        thing.save()`
-`        .then(() => response.status(201).json({ message: 'Objet enregistré !'}))`
-`        .catch(error => response.status(400).json({ error}))`
+        thing.save()
+        .then(() => response.status(201).json({ message: 'Objet enregistré !'}))
+        .catch(error => response.status(400).json({ error}))
     });
 
     /* 

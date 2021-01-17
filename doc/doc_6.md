@@ -44,7 +44,7 @@ Une fois l'installation terminée, importez mongoose dans votre fichier app.js e
 Juste en dessous de votre déclaration de constante app, ajoutez la ligne suivante. 
 Veillez à remplacer l'adresse SRV par la vôtre et la chaîne <PASSWORD> par votre mot de passe utilisateur MongoDB :
 
-`    mongoose.connect('mongodb+srv://jimbob:<PASSWORD>@cluster0-pme76.mongodb.net/test?retryWrites=true&w=majority',`
+    mongoose.connect('mongodb+srv://jimbob:<PASSWORD>@cluster0-pme76.mongodb.net/test?retryWrites=true&w=majority',
     { useNewUrlParser: true,
         useUnifiedTopology: true })
     .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -62,21 +62,21 @@ dans `app.js`
     const bodyParser = require('body-parser');
 
     /** pour MongoDB */
-`    const mongoose = require('mongoose');`
+    const mongoose = require('mongoose');
 
     const app = express();
 
-`    const uri = "mongodb+srv://go-fullstack:go-fullstack@cluster0.zbjqg.mongodb.net/go-fullstack?retryWrites=true&w=majority";`
+    const uri = "mongodb+srv://go-fullstack:go-fullstack@cluster0.zbjqg.mongodb.net/go-fullstack?retryWrites=true&w=majority";
 
     /**
     * connexion à MongoDB
     */
-`    mongoose.connect(uri,`
-`    { useNewUrlParser: true,`
-`        useUnifiedTopology: true `
-`    })`
-`    .then(() => console.log('Connexion à MongoDB réussie !'))`
-`    .catch(() => console.log('Connexion à MongoDB échouée !'));`
+    mongoose.connect(uri,
+    { useNewUrlParser: true,
+        useUnifiedTopology: true 
+    })`
+    .then(() => console.log('Connexion à MongoDB réussie !'))
+    .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 
 # Creer un schema de données
