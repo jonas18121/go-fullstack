@@ -22,6 +22,8 @@ cliquer sur Add IP Adress et autoriser l'accès depuis n'importe où (`Add acces
 
 ## Connecion de notre API à notre cluster MongoDB
 
+site : https://mongoosejs.com/
+
 mongodb+srv://go-fullstack:<password>@cluster0.zbjqg.mongodb.net/<dbname>?retryWrites=true&w=majority
 
 Depuis MongoDB Atlas, cliquez sur le bouton Connect et choisissez Connect your application. 
