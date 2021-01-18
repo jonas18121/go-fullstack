@@ -5,10 +5,11 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 /** on charge le fichier de notre router stuff.js */
-const stuffRoutes = require('./routes/stuff')
+const stuffRoutes = require('./routes/stuff');
 
 /** on charge le fichier de notre router user.js */
-const userRoutes = require('./routes/user')
+const userRoutes = require('./routes/user');
+
 
 /** framework express */
 const app = express();
