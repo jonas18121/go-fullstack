@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 
 const User = require('../models/user');
 
+const jwt = require('jsonwebtoken');
+
 /**
  * inscription user
  * 
@@ -48,11 +50,16 @@ exports.login = (request, response, next) => {
                     }
                     response.status(200).json({ 
                         userId: user._id,
-                        token:'TOKEN'
+                        token: jwt.sign(
+                            { userId: user._id },
+                            'RANDOM_TOKEN_SECRET',
+                            { expiresIn: '24h' }
+                        )
                     });
                 })
                 .catch(error => response.status(500).json({ error}))
             ;
         })
-        .catch(error => response.status(500).json({ error}));
+        .catch(error => response.status(500).json({ error}))
+    ;
 };
