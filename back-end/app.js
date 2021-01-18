@@ -7,6 +7,9 @@ const mongoose = require('mongoose');
 /** on charge le fichier de notre router stuff.js */
 const stuffRoutes = require('./routes/stuff')
 
+/** on charge le fichier de notre router user.js */
+const userRoutes = require('./routes/user')
+
 /** framework express */
 const app = express();
 
@@ -42,6 +45,9 @@ app.use(bodyParser.json());
 
 /** notre router stuffRoutes réagira a toutes les demandes effectuées vers '/api/stuff' */
 app.use('/api/stuff', stuffRoutes);
+
+/** notre router userRoutes réagira a toutes les demandes effectuées vers '/api/user' */
+app.use('/api/user', userRoutes);
 
 
 
