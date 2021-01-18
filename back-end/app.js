@@ -47,7 +47,7 @@ app.use(bodyParser.json());
 app.use('/api/stuff', stuffRoutes);
 
 /** notre router userRoutes réagira a toutes les demandes effectuées vers '/api/user' */
-app.use('/api/user', userRoutes);
+app.use('/api/auth', userRoutes);
 
 
 
