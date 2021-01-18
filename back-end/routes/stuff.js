@@ -8,6 +8,8 @@ const router = express.Router();
 /** on récupère notre controleur pour ce type de routes `/api/stuff` */
 const stuffController = require('../controllers/stuff');
 
+/** on récupère le middlewrae d'authentification */
+const auth = require('../middleware/auth');
 
 /**
  * créer un objet pour la vendre
@@ -42,7 +44,7 @@ const stuffController = require('../controllers/stuff');
  * grace aux 3 petits point, appelé spread (...request.body) : 
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
  */
-router.post('/', stuffController.createThing);
+router.post('/', auth, stuffController.createThing);
 
 
 /**
@@ -50,21 +52,21 @@ router.post('/', stuffController.createThing);
  * 
  * dans request.params , on a les paramètre qui on été envoyer , ici c'est l'id
  */
-router.get('/:id', stuffController.getOneThing);
+router.get('/:id', auth, stuffController.getOneThing);
 
 /**
  * Modifier un objet précis
  * 
  * dans request.params , on a les paramètre qui on été envoyer , ici c'est l'id
  */
-router.put('/:id', stuffController.modifyThing);
+router.put('/:id', auth, stuffController.modifyThing);
 
 /**
  * Supprimer un objet précis
  * 
  * dans request.params , on a les paramètre qui on été envoyer , ici c'est l'id
  */
-router.delete('/:id', stuffController.deleteThing);
+router.delete('/:id', auth, stuffController.deleteThing);
 
 
 /* 
@@ -74,7 +76,7 @@ router.delete('/:id', stuffController.deleteThing);
  *   l'addresse absolue est pour l'instant : 'http://localhost:3000/api/stuff',
  *   notre partie front-end pourra recupéré le contenu de la constante stuff, a cette adresse absolue
 */
-router.get('/', stuffController.getAllStuff);
+router.get('/', auth, stuffController.getAllStuff);
 
 
 module.exports = router;
