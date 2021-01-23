@@ -10,6 +10,9 @@ const stuffRoutes = require('./routes/stuff');
 /** on charge le fichier de notre router user.js */
 const userRoutes = require('./routes/user');
 
+/** accéder au path de notre serveur */
+const path = require('path');
+
 
 /** framework express */
 const app = express();
@@ -43,6 +46,13 @@ app.use((request, response, next) => {
  * ça va agir sur toutes les routes de l'application 
  */
 app.use(bodyParser.json());
+
+/**
+ * indique à Express qu'il faut gérer la ressource images de manière statique
+ *  (un sous-répertoire de notre répertoire de base, __dirname ) 
+ * à chaque fois qu'elle reçoit une requête vers la route /images
+ */
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 /** notre router stuffRoutes réagira a toutes les demandes effectuées vers '/api/stuff' */
 app.use('/api/stuff', stuffRoutes);

@@ -6,15 +6,20 @@ const Thing = require('../models/thing');
 
 exports.createThing = (request, response, next) => {
 
+    const thingObject = JSON.parse(request.body.thing)
+
     /** le front-end va renvoyer un id qui ne sera pas le bon , vu que MongoDB va le généré automatiquement
      * on va supprimer l'id du corp de la requète avant de copier l'objet
     */
-    delete request.body._id;
+    delete thingObject._id;
 
     const thing = new Thing({
 
         /** raccourcie javascript pour récupérer les données dans le corp du body */
-        ...request.body
+        ...thingObject,
+
+        // url d'image dynamique pour que le front-end puisse le trouver
+        imageUrl: `${request.protocol}://${request.get('host')}/images/${request.file.filename}`
     });
 
     /**
