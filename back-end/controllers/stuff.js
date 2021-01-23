@@ -44,8 +44,14 @@ exports.getOneThing = (request, response, next) => {
 
 exports.modifyThing = (request, response, next) => {
 
-    //console.log(response);
-    Thing.updateOne({ _id: request.params.id }, { ...request.body, _id: request.params.id})
+    const thingObject = request.file ?
+        {
+            ...JSON.parse(request.body.thing),
+            imageUrl: `${request.protocol}://${request.get('host')}/images/${request.file.filename}`
+        } : { ...request.body };
+
+
+    Thing.updateOne({ _id: request.params.id }, { ...thingObject, _id: request.params.id})
         .then(() => response.status(200).json({ message: 'Objet modifié !'}))
         .catch(error => response.status(404).json({ error }))
     ;
