@@ -3,6 +3,7 @@
 Pour que notre middleware de téléchargement de fichiers fonctionne sur nos routes, nous devrons les modifier, 
 car le format d'une requête contenant un fichier du front-end est différent.
 
+
 ## Modifier la route POST
 
 Tout d'abord, ajoutons notre middleware `multer` à notre route `POST` dans notre routeur `stuff`
@@ -94,13 +95,13 @@ en rendant notre dossier images statique.
 
 Il nous faudra une nouvelle importation dans app.js pour accéder au path de notre serveur :
 
-dans app.js
+dans `app.js`
 
     const path = require('path');
 
 De plus, nous ajoutons le gestionnaire de routage suivant juste au-dessus de nos routes actuelles :
 
-dans app.js
+dans `app.js`
 
     app.use('/images', express.static(path.join(__dirname, 'images')));
 
@@ -109,3 +110,69 @@ Cela indique à Express qu'il faut gérer la ressource images de manière statiq
 à chaque fois qu'elle reçoit une requête vers la route /images . 
 Enregistrez et actualisez l'application dans le navigateur ; désormais, 
 tout devrait fonctionner correctement. Et maintenant, occupons-nous de la route PUT !
+
+
+## Modifier la route PUT
+
+La modification de notre route PUT est sensiblement plus compliquée, car nous devons prendre en compte deux possibilités : 
+l'utilisateur a mis à jour l'image, ou pas.
+ Dans le premier cas, nous recevrons l'élément form-data et le fichier. 
+ Dans le second cas, nous recevrons uniquement les données JS
+
+
+Tout d'abord, ajoutons multer comme middleware à notre route PUT :
+
+dans `routes/stuff.js`
+
+    const express = require('express');
+    const router = express.Router();
+
+    const auth = require('../middleware/auth');
+    const multer = require('../middleware/multer-config');
+
+    const stuffCtrl = require('../controllers/stuff');
+
+    router.get('/', auth, stuffCtrl.getAllStuff);
+    router.post('/', auth, multer, stuffCtrl.createThing);
+    router.get('/:id', auth, stuffCtrl.getOneThing);
+    router.put('/:id', auth, multer, stuffCtrl.modifyThing);
+    router.delete('/:id', auth, stuffCtrl.deleteThing);
+
+    module.exports = router;
+
+
+À présent, nous devons modifier notre fonction modifyThing() pour voir si nous avons reçu ou non un nouveau fichier, et répondre en conséquence :
+
+dans `controller/stuff.js`
+
+    exports.modifyThing = (req, res, next) => {
+    const thingObject = req.file ?
+        {
+            ...JSON.parse(req.body.thing),
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        } : { ...req.body };
+
+    Thing.updateOne({ _id: req.params.id }, { ...thingObject, _id: req.params.id })
+        .then(() => res.status(200).json({ message: 'Objet modifié !'}))
+        .catch(error => res.status(400).json({ error }));
+    };
+
+-------------------------------------------------------------
+
+const thingObject = req.file ?
+        {
+            ...JSON.parse(req.body.thing),
+            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+        } : { ...req.body };
+
+dans thingObject on met un `ternaire` qui dit que `s'il y a une image lors de la validation de la modification` 
+on fait le même traitement qu'on a fait pour la fonction `POST` 
+via (...JSON.parse(req.body.thing), et imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}` ) 
+sinon s'il n'y a pas d'image on fait les chose normalement via ...req.body
+
+
+Dans cette version modifiée de la fonction, on crée un objet thingObject qui regarde si req.file existe ou non. 
+S'il existe, on traite la nouvelle image ; s'il n'existe pas, on traite simplement l'objet entrant. 
+On crée ensuite une instance Thing à partir de thingObject , puis on effectue la modification.
+
+Félicitations ! Notre application gère correctement les téléchargements de fichiers lorsque nous mettons de nouveaux articles en vente et lorsque nous modifions les articles existants.
