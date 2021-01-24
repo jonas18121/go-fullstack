@@ -175,4 +175,4 @@ Dans cette version modifiée de la fonction, on crée un objet thingObject qui r
 S'il existe, on traite la nouvelle image ; s'il n'existe pas, on traite simplement l'objet entrant. 
 On crée ensuite une instance Thing à partir de thingObject , puis on effectue la modification.
 
-Félicitations ! Notre application gère correctement les téléchargements de fichiers lorsque nous mettons de nouveaux articles en vente et lorsque nous modifions les articles existants.
+
