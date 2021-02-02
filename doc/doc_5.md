@@ -15,7 +15,7 @@ Pour gérer le demande POST provenant de l'application front-end,
 Il nous faudra le package `body-parser`. 
 On l'installe en tant que dépendance de production à l'aide de `npm`
 
-`    npm install --save body-paser`
+`    npm install --save body-parser`
 
 on l'import dans notre fichier app.js
 
