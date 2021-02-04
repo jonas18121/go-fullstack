@@ -157,7 +157,7 @@ dans server.js
         la fonction normalizePort renvoie un port valide, 
         qu'il soit fourni sous la forme d'un numéro ou d'une chaîne ;
     */
-    const port = nomarlizePort(process.env.PORT || '3000');
+    const port = normalizePort(process.env.PORT || '3000');
     app.set('port', port);
 
     /* 

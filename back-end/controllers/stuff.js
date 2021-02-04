@@ -3,6 +3,8 @@
 /** model */
 const Thing = require('../models/thing');
 
+const fs = require('fs');
+
 
 exports.createThing = (request, response, next) => {
 
@@ -61,12 +63,20 @@ exports.modifyThing = (request, response, next) => {
 
 exports.deleteThing = (request, response, next) => {
 
-    //console.log(response);
-    Thing.deleteOne({ _id: request.params.id })
-        .then(() => response.status(200).json({ message: 'Objet supprimé !'}))
-        .catch(error => response.status(404).json({ error }))
-    ;
+    Thing.findOne({ _id: request.params.id })
+        .then(thing => {
+        
+            const filename = thing.imageUrl.split('/images/')[1];
+            fs.unlink(`images/${filename}`, () => {
 
+                Thing.deleteOne({ _id: request.params.id })
+                    .then(() => response.status(200).json({ message: 'Objet supprimé !'}))
+                    .catch(error => response.status(400).json({ error }))
+                ;
+            });
+        })
+        .catch(error => response.status(500).json({ error }))
+    ;
 }
 
 
