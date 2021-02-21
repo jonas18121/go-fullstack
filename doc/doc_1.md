@@ -21,4 +21,12 @@ puis :
     npm install
     ng serve
 
-    
+
+
+
+## Debuguer dans le html de Angular
+
+    <pre>
+        <!-- pour debug dans html angular -->
+        <span>{{eleve | json}}</span>
+    </pre>

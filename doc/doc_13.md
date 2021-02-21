@@ -18,7 +18,7 @@ dans `middleware/auth.js`
             * et comme dans authorization, on a Bearer (un espace) puis le token
             * on va utiliser split() pour tout récupérer après l'espace
             */
-            const token = request.headers.authorization.split('')[1];
+            const token = request.headers.authorization.split(' ')[1];
 
             /**
             * on decode le token pour le comparer avec la clé secrète
